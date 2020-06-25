@@ -21,9 +21,6 @@ export class DashboardComponent {
       map((country) => Object.values<CountrySlim>(country)[0])
     );
 
-  countries$ = this.covidService.countriesNumbers$;
-  countriesCount$ = this.countries$.pipe(map(countries => countries.length));
-
   constructor(
     private covidService: CovidService,
     private activatedRoute: ActivatedRoute,

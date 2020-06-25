@@ -8,36 +8,36 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { NxModule, DataPersistence } from '@nrwl/angular';
 import { hot } from '@nrwl/angular/testing';
 
-import { DashboardEffects } from './dashboard.effects';
-import * as DashboardActions from './dashboard.actions';
+import { NavigationEffects } from './navigation.effects';
+import * as NavigationActions from './navigation.actions';
 
-describe('DashboardEffects', () => {
+describe('NavigationEffects', () => {
   let actions: Observable<any>;
-  let effects: DashboardEffects;
+  let effects: NavigationEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NxModule.forRoot()],
       providers: [
-        DashboardEffects,
+        NavigationEffects,
         DataPersistence,
         provideMockActions(() => actions),
-        provideMockStore()
-      ]
+        provideMockStore(),
+      ],
     });
 
-    effects = TestBed.get(DashboardEffects);
+    effects = TestBed.get(NavigationEffects);
   });
 
-  describe('loadDashboard$', () => {
+  describe('loadNavigation$', () => {
     it('should work', () => {
-      actions = hot('-a-|', { a: DashboardActions.loadLatestForCountry({ payload: { countryCode: '' } }) });
+      actions = hot('-a-|', { a: NavigationActions.loadNavigation() });
 
       const expected = hot('-a-|', {
-        a: DashboardActions.loadLatestForCountrySuccess({ dashboard: [] })
+        a: NavigationActions.loadNavigationSuccess({ navigation: [] }),
       });
 
-      expect(effects.loadLatestForCountry$).toBeObservable(expected);
+      expect(effects.loadNavigation$).toBeObservable(expected);
     });
   });
 });

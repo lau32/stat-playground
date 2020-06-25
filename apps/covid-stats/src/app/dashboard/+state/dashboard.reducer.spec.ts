@@ -17,7 +17,7 @@ describe('Dashboard Reducer', () => {
         createDashboardEntity('PRODUCT-AAA'),
         createDashboardEntity('PRODUCT-zzz'),
       ];
-      const action = DashboardActions.loadDashboardSuccess({ dashboard });
+      const action = DashboardActions.loadLatestForCountrySuccess({ dashboard });
 
       const result: State = reducer(initialState, action);
 

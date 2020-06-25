@@ -10,6 +10,7 @@ import * as fromDashboard from './+state/dashboard.reducer';
 import { DashboardEffects } from './+state/dashboard.effects';
 import { DashboardFacade } from './+state/dashboard.facade';
 import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.component';
+import { NavigationModule } from '../navigation/navigation.module';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
     ),
 
     EffectsModule.forFeature([DashboardEffects]),
+    NavigationModule
   ],
   providers: [DashboardFacade],
 })

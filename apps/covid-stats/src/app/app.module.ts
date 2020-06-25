@@ -15,15 +15,16 @@ import { NxModule } from '@nrwl/angular';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { NavigationModule } from './navigation/navigation.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-  },
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+  // },
   {
     path: '**',
-    redirectTo: 'countries'
+    redirectTo: ''
   }
 ];
 
@@ -43,6 +44,7 @@ const routes: Routes = [
 
     CoreModule,
     DashboardModule,
+    NavigationModule,
     SharedModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot()

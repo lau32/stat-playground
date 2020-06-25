@@ -10,42 +10,35 @@ import { CovidApiService } from '../../covid-api.service';
 
 @Injectable()
 export class DashboardEffects {
-  urlCountryCode$ = createEffect(() =>
+  loadCountryCode$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),
       map(({ payload: { routerState: { root: { firstChild: { params } } } } }) => params),
       tap(console.log),
       filter(({ countryCode }) => !!countryCode),
-      map(({ countryCode }) => DashboardActions.loadDashboard({ payload: { countryCode } }))
+      map(({ countryCode }) => DashboardActions.loadLatestForCountry({ payload: { countryCode } }))
     )
   );
 
-  loadDashboard$ = createEffect(() =>
-    this.dataPersistence.fetch(DashboardActions.loadDashboard, {
+  loadLatestForCountry$ = createEffect(() =>
+    this.dataPersistence.fetch(DashboardActions.loadLatestForCountry, {
       run: (
-        action: ReturnType<typeof DashboardActions.loadDashboard>,
-        state: fromDashboard.DashboardPartialState
-      ) => {
-        // Your custom service 'load' logic goes here. For now just return a success action...
-        // return DashboardActions.loadDashboardSuccess({ dashboard: [] });
-
-        return this.covidApiService.getLatestForCountry(action.payload.countryCode)
-          .pipe(
-            map((response) => DashboardActions.loadDashboardSuccess({
-              dashboard: [{
-                id: Object.keys(response.result)[0],
-                ...Object.values(response.result)[0]
-              }]
-            }))
-          );
-      },
+        action: ReturnType<typeof DashboardActions.loadLatestForCountry>,
+      ) => this.covidApiService.getLatestForCountry(action.payload.countryCode)
+        .pipe(
+          map((response) => DashboardActions.loadLatestForCountrySuccess({
+            dashboard: [{
+              id: Object.keys(response.result)[0],
+              ...Object.values(response.result)[0]
+            }]
+          }))
+        ),
 
       onError: (
-        action: ReturnType<typeof DashboardActions.loadDashboard>,
+        action: ReturnType<typeof DashboardActions.loadLatestForCountry>,
         error
       ) => {
-        console.error('Error', error);
-        return DashboardActions.loadDashboardFailure({ error });
+        return DashboardActions.loadLatestForCountryFailure({ error });
       }
     })
   );

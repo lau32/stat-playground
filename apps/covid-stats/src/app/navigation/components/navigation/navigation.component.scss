@@ -1,0 +1,16 @@
+.countries-list {
+  overflow: scroll;
+
+  .nav-link {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.list-item {
+  max-width: 50%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

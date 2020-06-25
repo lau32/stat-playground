@@ -3,14 +3,11 @@ import {
   DASHBOARD_FEATURE_KEY,
   State,
   DashboardPartialState,
-  dashboardAdapter,
+  dashboardAdapter
 } from './dashboard.reducer';
 
-// Lookup the 'Dashboard' feature state managed by NgRx
-export const getDashboardState = createFeatureSelector<
-  DashboardPartialState,
-  State
->(DASHBOARD_FEATURE_KEY);
+export const getDashboardState = createFeatureSelector<DashboardPartialState,
+  State>(DASHBOARD_FEATURE_KEY);
 
 const { selectAll, selectEntities } = dashboardAdapter.getSelectors();
 
@@ -42,5 +39,7 @@ export const getSelectedId = createSelector(
 export const getSelected = createSelector(
   getDashboardEntities,
   getSelectedId,
-  (entities, selectedId) => selectedId && entities[selectedId]
+  (
+    entities,
+    selectedId) => selectedId && entities[selectedId]
 );

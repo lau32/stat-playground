@@ -7,29 +7,29 @@ import { StoreModule, Store } from '@ngrx/store';
 
 import { NxModule } from '@nrwl/angular';
 
-import { DashboardEntity } from './dashboard.models';
-import { DashboardEffects } from './dashboard.effects';
-import { DashboardFacade } from './dashboard.facade';
+import { NavigationEntity } from './navigation.models';
+import { NavigationEffects } from './navigation.effects';
+import { NavigationFacade } from './navigation.facade';
 
-import * as DashboardActions from './dashboard.actions';
+import * as NavigationActions from './navigation.actions';
 import {
-  DASHBOARD_FEATURE_KEY,
+  NAVIGATION_FEATURE_KEY,
   State,
   reducer,
-} from './dashboard.reducer';
+} from './navigation.reducer';
 
 interface TestSchema {
-  dashboard: State;
+  navigation: State;
 }
 
-describe('DashboardFacade', () => {
-  let facade: DashboardFacade;
+describe('NavigationFacade', () => {
+  let facade: NavigationFacade;
   let store: Store<TestSchema>;
-  const createDashboardEntity = (id: string, name = '') =>
+  const createNavigationEntity = (id: string, name = '') =>
     ({
       id,
       name: name || `name-${id}`,
-    } as DashboardEntity);
+    } as NavigationEntity);
 
   beforeEach(() => {});
 
@@ -37,10 +37,10 @@ describe('DashboardFacade', () => {
     beforeEach(() => {
       @NgModule({
         imports: [
-          StoreModule.forFeature(DASHBOARD_FEATURE_KEY, reducer),
-          EffectsModule.forFeature([DashboardEffects]),
+          StoreModule.forFeature(NAVIGATION_FEATURE_KEY, reducer),
+          EffectsModule.forFeature([NavigationEffects]),
         ],
-        providers: [DashboardFacade],
+        providers: [NavigationFacade],
       })
       class CustomFeatureModule {}
 
@@ -56,7 +56,7 @@ describe('DashboardFacade', () => {
       TestBed.configureTestingModule({ imports: [RootModule] });
 
       store = TestBed.get(Store);
-      facade = TestBed.get(DashboardFacade);
+      facade = TestBed.get(NavigationFacade);
     });
 
     /**
@@ -64,13 +64,15 @@ describe('DashboardFacade', () => {
      */
     it('loadAll() should return empty list with loaded == true', async (done) => {
       try {
-        let list = await readFirst(facade.allDashboard$);
+        let list = await readFirst(facade.allCountries$);
         let isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(0);
         expect(isLoaded).toBe(false);
 
-        list = await readFirst(facade.allDashboard$);
+        facade.dispatch(NavigationActions.loadNavigation());
+
+        list = await readFirst(facade.allCountries$);
         isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(0);
@@ -83,26 +85,26 @@ describe('DashboardFacade', () => {
     });
 
     /**
-     * Use `loadDashboardSuccess` to manually update list
+     * Use `loadNavigationSuccess` to manually update list
      */
-    it('allDashboard$ should return the loaded list; and loaded flag == true', async (done) => {
+    it('allNavigation$ should return the loaded list; and loaded flag == true', async (done) => {
       try {
-        let list = await readFirst(facade.allDashboard$);
+        let list = await readFirst(facade.allCountries$);
         let isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(0);
         expect(isLoaded).toBe(false);
 
         facade.dispatch(
-          DashboardActions.loadLatestForCountrySuccess({
-            dashboard: [
-              createDashboardEntity('AAA'),
-              createDashboardEntity('BBB'),
+          NavigationActions.loadNavigationSuccess({
+            navigation: [
+              createNavigationEntity('AAA'),
+              createNavigationEntity('BBB'),
             ],
           })
         );
 
-        list = await readFirst(facade.allDashboard$);
+        list = await readFirst(facade.allCountries$);
         isLoaded = await readFirst(facade.loaded$);
 
         expect(list.length).toBe(2);
