@@ -3,7 +3,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 
 import * as DashboardActions from './dashboard.actions';
 import { DashboardEntity } from './dashboard.models';
-import { Country } from '../../country';
+import { Country } from '../../shared/models/country.model';
 
 export const DASHBOARD_FEATURE_KEY = 'dashboard';
 

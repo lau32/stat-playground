@@ -6,7 +6,7 @@ import * as fromDashboard from './dashboard.reducer';
 import * as DashboardActions from './dashboard.actions';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { filter, map, tap } from 'rxjs/operators';
-import { CovidApiService } from '../../covid-api.service';
+import { CasesApi } from '../../core/providers/cases.api';
 
 @Injectable()
 export class DashboardEffects {
@@ -46,7 +46,7 @@ export class DashboardEffects {
   constructor(
     private actions$: Actions,
     private dataPersistence: DataPersistence<fromDashboard.DashboardPartialState>,
-    private covidApiService: CovidApiService
+    private covidApiService: CasesApi
   ) {
   }
 }

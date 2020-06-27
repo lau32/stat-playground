@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationComponent } from './components/navigation/navigation.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+
+import { NavigationComponent } from './components/navigation/navigation.component';
 import * as fromNavigation from './+state/navigation.reducer';
 import { NavigationEffects } from './+state/navigation.effects';
 import { NavigationFacade } from './+state/navigation.facade';
+import { NavigationService } from './providers/navigation.service';
+import { NavigationApi } from './providers/navigation.api';
 
 @NgModule({
   declarations: [NavigationComponent],
@@ -17,7 +20,7 @@ import { NavigationFacade } from './+state/navigation.facade';
     ),
     EffectsModule.forFeature([NavigationEffects])
   ],
-  providers: [NavigationFacade],
+  providers: [NavigationFacade, NavigationService, NavigationApi],
   exports: [NavigationComponent]
 })
 export class NavigationModule {}

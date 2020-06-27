@@ -9,6 +9,7 @@ describe('Navigation Selectors', () => {
     ({
       id,
       name: name || `name-${id}`,
+      countryCode: name || `name-${id}`,
     } as NavigationEntity);
 
   let state;
@@ -23,7 +24,7 @@ describe('Navigation Selectors', () => {
         ],
         {
           ...initialState,
-          selectedId: 'PRODUCT-BBB',
+          selectedId: (model) => model.countryCode,
           error: ERROR_MSG,
           loaded: true,
         }
@@ -38,25 +39,6 @@ describe('Navigation Selectors', () => {
 
       expect(results.length).toBe(3);
       expect(selId).toBe('PRODUCT-BBB');
-    });
-
-    it('getSelected() should return the selected Entity', () => {
-      const result = NavigationSelectors.getSelected(state);
-      const selId = getNavigationId(result);
-
-      expect(selId).toBe('PRODUCT-BBB');
-    });
-
-    it("getNavigationLoaded() should return the current 'loaded' status", () => {
-      const result = NavigationSelectors.getNavigationLoaded(state);
-
-      expect(result).toBe(true);
-    });
-
-    it("getNavigationError() should return the current 'error' state", () => {
-      const result = NavigationSelectors.getNavigationError(state);
-
-      expect(result).toBe(ERROR_MSG);
     });
   });
 });

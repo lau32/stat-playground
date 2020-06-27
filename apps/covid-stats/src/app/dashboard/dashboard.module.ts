@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CountriesComponent } from './countries/countries.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { CountriesComponent } from './components/countries/countries.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import * as fromDashboard from './+state/dashboard.reducer';
 import { DashboardEffects } from './+state/dashboard.effects';
 import { DashboardFacade } from './+state/dashboard.facade';
-import { DoughnutChartComponent } from './doughnut-chart/doughnut-chart.component';
+import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
 import { NavigationModule } from '../navigation/navigation.module';
 
 const routes: Routes = [

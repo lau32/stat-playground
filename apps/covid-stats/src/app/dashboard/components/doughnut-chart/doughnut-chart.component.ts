@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { Chart } from 'chart.js';
-import { CountrySlim } from '../../covid-api.service';
+import { CountryNumbers } from '../../../core/providers/cases.api';
 
 @Component({
   selector: 'stat-playground-doughnut-chart',
@@ -18,7 +18,7 @@ import { CountrySlim } from '../../covid-api.service';
 export class DoughnutChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('chart') canvas: ElementRef;
 
-  @Input() latestForCountry: CountrySlim;
+  @Input() latestForCountry: CountryNumbers;
 
   chart: Chart;
   context: CanvasRenderingContext2D;

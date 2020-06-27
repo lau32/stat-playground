@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NavigationEntity } from '../+state/navigation.models';
-import { Country } from '../../country';
+import { NavigationApi } from './navigation.api';
+import { CasesApi } from '../../core/providers/cases.api';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class NavigationService {
-  COUNTRIES_URL = 'https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json';
-
-  constructor(private http: HttpClient) {
+  constructor(
+    private navigationApi: NavigationApi,
+    private casesApi: CasesApi,
+    ) {
   }
 
-  getCountries(): Observable<Country[]> {
-    return this.http.get<Country[]>(this.COUNTRIES_URL);
+  getLatestNumbers() {
+    return this.casesApi.getLatestNumbers()
   }
 
   getCamelCaseCountries(): Observable<NavigationEntity[]> {
-    return this.getCountries()
+    return this.navigationApi.getCountries()
       .pipe(
         map((countries) => countries
           .map((country) => this.mapKeyToCamelCase(country) as NavigationEntity))

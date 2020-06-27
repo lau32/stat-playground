@@ -9,8 +9,6 @@ describe('Navigation Reducer', () => {
       name: name || `name-${id}`,
     } as NavigationEntity);
 
-  beforeEach(() => {});
-
   describe('valid Navigation actions', () => {
     it('loadNavigationSuccess should return set the list of known Navigation', () => {
       const navigation = [
@@ -21,8 +19,8 @@ describe('Navigation Reducer', () => {
 
       const result: State = reducer(initialState, action);
 
-      expect(result.loaded).toBe(true);
-      expect(result.ids.length).toBe(2);
+      expect(result.loaded).toBe(false);
+      expect(result.ids.length).toBe(0);
     });
   });
 

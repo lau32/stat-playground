@@ -7,17 +7,18 @@ import * as NavigationActions from './navigation.actions';
 import { NavigationService } from '../providers/navigation.service';
 import { map } from 'rxjs/operators';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class NavigationEffects {
-  loadCountries$ = createEffect(() =>
+  navigated$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),
       map(() => NavigationActions.loadCountries())
     )
   );
 
-  loadNavigation$ = createEffect(() =>
+  loadCountries$ = createEffect(() =>
     this.dataPersistence.fetch(NavigationActions.loadCountries, {
       run: () => {
         return this.navigationService.getCamelCaseCountries()
@@ -29,10 +30,19 @@ export class NavigationEffects {
       onError: (
         action: ReturnType<typeof NavigationActions.loadNavigation>,
         error
-      ) => {
-        console.error('Error', error);
-        return NavigationActions.loadNavigationFailure({ error });
-      }
+      ) => NavigationActions.loadNavigationFailure({ error })
+    })
+  );
+
+  loadLatestNumbers$ = createEffect(() =>
+    this.dataPersistence.fetch(NavigationActions.loadCountriesSuccess, {
+      run: () => EMPTY
+      // this.navigationService.getLatestNumbers()
+      ,
+      onError: (
+        action: ReturnType<typeof NavigationActions.loadNavigation>,
+        error
+      ) => NavigationActions.loadNavigationFailure({ error })
     })
   );
 

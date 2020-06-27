@@ -1,9 +1,11 @@
-/**
- * Interface for the 'Navigation' data
- */
+interface CountryNumbers {
+  confirmed: number
+  deaths: number
+  recovered: number
+}
 
 export interface NavigationEntity {
-  id?: string | number; // Primary ID
+  id?: string | number;
   name: string;
   'alpha-2': string;
   'alpha-3': string;
@@ -15,4 +17,5 @@ export interface NavigationEntity {
   regionCode: string;
   subRegionCode: string;
   intermediateRegionCode: string;
+  numbers?: CountryNumbers
 }

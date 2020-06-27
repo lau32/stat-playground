@@ -1,5 +1,5 @@
 import { DashboardEntity } from './dashboard.models';
-import { State, dashboardAdapter, initialState } from './dashboard.reducer';
+import { dashboardAdapter, initialState } from './dashboard.reducer';
 import * as DashboardSelectors from './dashboard.selectors';
 
 describe('Dashboard Selectors', () => {
@@ -8,7 +8,7 @@ describe('Dashboard Selectors', () => {
   const createDashboardEntity = (id: string, name = '') =>
     ({
       id,
-      name: name || `name-${id}`,
+      name: name || `name-${id}`
     } as DashboardEntity);
 
   let state;
@@ -19,15 +19,15 @@ describe('Dashboard Selectors', () => {
         [
           createDashboardEntity('PRODUCT-AAA'),
           createDashboardEntity('PRODUCT-BBB'),
-          createDashboardEntity('PRODUCT-CCC'),
+          createDashboardEntity('PRODUCT-CCC')
         ],
         {
           ...initialState,
           selectedId: 'PRODUCT-BBB',
           error: ERROR_MSG,
-          loaded: true,
+          loaded: true
         }
-      ),
+      )
     };
   });
 
@@ -47,13 +47,13 @@ describe('Dashboard Selectors', () => {
       expect(selId).toBe('PRODUCT-BBB');
     });
 
-    it("getDashboardLoaded() should return the current 'loaded' status", () => {
+    it('getDashboardLoaded() should return the current \'loaded\' status', () => {
       const result = DashboardSelectors.getDashboardLoaded(state);
 
       expect(result).toBe(true);
     });
 
-    it("getDashboardError() should return the current 'error' state", () => {
+    it('getDashboardError() should return the current \'error\' state', () => {
       const result = DashboardSelectors.getDashboardError(state);
 
       expect(result).toBe(ERROR_MSG);

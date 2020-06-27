@@ -18,10 +18,6 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { NavigationModule } from './navigation/navigation.module';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-  // },
   {
     path: '**',
     redirectTo: ''

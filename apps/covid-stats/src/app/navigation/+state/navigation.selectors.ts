@@ -6,7 +6,6 @@ import {
   navigationAdapter,
 } from './navigation.reducer';
 
-// Lookup the 'Navigation' feature state managed by NgRx
 export const getNavigationState = createFeatureSelector<
   NavigationPartialState,
   State

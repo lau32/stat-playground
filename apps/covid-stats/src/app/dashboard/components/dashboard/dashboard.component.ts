@@ -4,8 +4,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
-import { CovidService } from '../../covid.service';
-import { CountrySlim } from '../../covid-api.service';
+import { DashboardService } from '../../providers/dashboard.service';
+import { CountryNumbers } from '../../../core/providers/cases.api';
 
 @Component({
   selector: 'stat-playground-dashboard',
@@ -18,11 +18,11 @@ export class DashboardComponent {
       map((params) => params.get('countryCode')),
       filter((countryCode) => !!countryCode),
       mergeMap((countryCode) => this.covidService.getLatestForCountry(countryCode)),
-      map((country) => Object.values<CountrySlim>(country)[0])
+      map((country) => Object.values<CountryNumbers>(country)[0])
     );
 
   constructor(
-    private covidService: CovidService,
+    private covidService: DashboardService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
