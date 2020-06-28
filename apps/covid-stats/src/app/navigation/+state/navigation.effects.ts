@@ -7,7 +7,6 @@ import * as NavigationActions from './navigation.actions';
 import { NavigationService } from '../providers/navigation.service';
 import { map } from 'rxjs/operators';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
-import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class NavigationEffects {
@@ -28,21 +27,21 @@ export class NavigationEffects {
       },
 
       onError: (
-        action: ReturnType<typeof NavigationActions.loadNavigation>,
+        action: ReturnType<typeof NavigationActions.loadCountries>,
         error
-      ) => NavigationActions.loadNavigationFailure({ error })
+      ) => NavigationActions.loadCountriesFailure({ error })
     })
   );
 
   loadLatestNumbers$ = createEffect(() =>
-    this.dataPersistence.fetch(NavigationActions.loadCountriesSuccess, {
-      run: () => EMPTY
-      // this.navigationService.getLatestNumbers()
-      ,
+    this.dataPersistence.fetch(NavigationActions.loadLatestNumbers, {
+      run: () => this.navigationService.getLatestNumbers()
+        .pipe(map(({ result: latestNumbers }) =>
+          NavigationActions.loadLatestNumbersSuccess({ latestNumbers }))),
       onError: (
-        action: ReturnType<typeof NavigationActions.loadNavigation>,
+        action: ReturnType<typeof NavigationActions.loadLatestNumbersFailure>,
         error
-      ) => NavigationActions.loadNavigationFailure({ error })
+      ) => NavigationActions.loadLatestNumbersFailure({ error })
     })
   );
 

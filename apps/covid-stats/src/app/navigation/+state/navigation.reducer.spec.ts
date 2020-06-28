@@ -1,36 +1,37 @@
-import { NavigationEntity } from './navigation.models';
-import * as NavigationActions from './navigation.actions';
-import { State, initialState, reducer } from './navigation.reducer';
+import { loadCountries, loadCountriesFailure, loadCountriesSuccess } from './navigation.actions';
+import { initialState, reducer, State } from './navigation.reducer';
+import { Action } from '@ngrx/store';
 
 describe('Navigation Reducer', () => {
-  const createNavigationEntity = (id: string, name = '') =>
-    ({
-      id,
-      name: name || `name-${id}`,
-    } as NavigationEntity);
+  it('should return the previous state', () => {
+    const action: Action = { type: '' };
 
-  describe('valid Navigation actions', () => {
-    it('loadNavigationSuccess should return set the list of known Navigation', () => {
-      const navigation = [
-        createNavigationEntity('PRODUCT-AAA'),
-        createNavigationEntity('PRODUCT-zzz'),
-      ];
-      const action = NavigationActions.loadNavigationSuccess({ navigation });
+    const result: State = reducer(initialState, action);
 
-      const result: State = reducer(initialState, action);
-
-      expect(result.loaded).toBe(false);
-      expect(result.ids.length).toBe(0);
-    });
+    expect(result).toBe(initialState);
   });
 
-  describe('unknown action', () => {
-    it('should return the previous state', () => {
-      const action = {} as any;
+  it('should return the loadCountriesSuccess', () => {
+    const action: Action = { type: loadCountries.type };
 
-      const result = reducer(initialState, action);
+    const result: State = reducer(initialState, action);
 
-      expect(result).toBe(initialState);
-    });
+    expect(result).toStrictEqual({ ...initialState, loaded: false, error: null });
+  });
+
+  it('should return the loadCountriesSuccess', () => {
+    const action: Action = { type: loadCountriesSuccess.type, countries: [] } as any;
+
+    const result: State = reducer(initialState, action);
+
+    expect(result).toStrictEqual({ ...initialState, loaded: true });
+  });
+
+  it('should return the loadCountriesFailure', () => {
+    const action: Action = { type: loadCountriesFailure.type, error: {} } as any;
+
+    const result: State = reducer(initialState, action);
+
+    expect(result).toStrictEqual({ ...initialState, error: {} });
   });
 });

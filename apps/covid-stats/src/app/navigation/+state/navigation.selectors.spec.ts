@@ -1,15 +1,15 @@
 import { NavigationEntity } from './navigation.models';
-import { navigationAdapter, initialState } from './navigation.reducer';
-import * as NavigationSelectors from './navigation.selectors';
+import { initialState, navigationAdapter } from './navigation.reducer';
+import { getCount, getNavigationError, getNavigationLoaded } from './navigation.selectors';
 
 describe('Navigation Selectors', () => {
   const ERROR_MSG = 'No Error Available';
-  const getNavigationId = (it) => it['id'];
+  const getNavigationId = (model) => model.countryCode;
   const createNavigationEntity = (id: string, name = '') =>
     ({
       id,
       name: name || `name-${id}`,
-      countryCode: name || `name-${id}`,
+      countryCode: name || `name-${id}`
     } as NavigationEntity);
 
   let state;
@@ -20,25 +20,33 @@ describe('Navigation Selectors', () => {
         [
           createNavigationEntity('PRODUCT-AAA'),
           createNavigationEntity('PRODUCT-BBB'),
-          createNavigationEntity('PRODUCT-CCC'),
+          createNavigationEntity('PRODUCT-CCC')
         ],
         {
           ...initialState,
-          selectedId: (model) => model.countryCode,
+          selectedId: getNavigationId,
           error: ERROR_MSG,
-          loaded: true,
+          loaded: true
         }
-      ),
+      )
     };
   });
 
-  describe('Navigation Selectors', () => {
-    it('getAllNavigation() should return the list of Navigation', () => {
-      const results = NavigationSelectors.getAllNavigation(state);
-      const selId = getNavigationId(results[1]);
+  it('getNavigationLoaded() should return loaded', () => {
+    const result: boolean = getNavigationLoaded(state);
 
-      expect(results.length).toBe(3);
-      expect(selId).toBe('PRODUCT-BBB');
-    });
+    expect(result).toBe(true);
+  });
+
+  it('getNavigationError() should return error', () => {
+    const result: string = getNavigationError(state);
+
+    expect(result).toBe(ERROR_MSG);
+  });
+
+  it('getCount() should return count', () => {
+    const result: number = getCount(state);
+
+    expect(result).toBe(3);
   });
 });

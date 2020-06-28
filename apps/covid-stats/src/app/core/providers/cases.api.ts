@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-export interface CountryNumbers {
-  confirmed: number
-  deaths: number
-  recovered: number
-}
-
-interface Result {
-  [x: string]: CountryNumbers
-}
+import { Result } from '../models/api.model';
 
 interface GlobalApiResponse<T> {
   count: number

@@ -38,10 +38,6 @@ const navigationReducer = createReducer(
   on(NavigationActions.loadCountriesFailure, (state, { error }) => ({
     ...state,
     error
-  })),
-  on(NavigationActions.setSelectedCountry, (state, { countryCode: selectedId }) => ({
-    ...state,
-    selectedId
   }))
 );
 
