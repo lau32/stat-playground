@@ -26,5 +26,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: git fetch origin master
     - run: npm ci
-    - run: npm run affected:build --base=origin/master --head=HEAD
-    - run: npm run affected:test --base=origin/master --head=HEAD
+    - run: npm run affected:build --base=master --head=HEAD
+    - run: npm run affected:test --base=master --head=HEAD
