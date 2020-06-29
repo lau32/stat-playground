@@ -43,3 +43,8 @@ export const getSelected = createSelector(
     entities,
     selectedId) => selectedId && entities[selectedId]
 );
+
+export const getLatestForCountry = createSelector(
+  getDashboardState,
+  (state: State) => state.latestForCountry
+);

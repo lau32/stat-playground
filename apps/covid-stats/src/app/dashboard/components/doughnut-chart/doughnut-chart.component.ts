@@ -1,38 +1,24 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges, OnDestroy,
-  SimpleChange,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
-import { CountryNumbers } from '../../../core/providers/cases.api';
+
+import { CNumbs } from '../../models/dashboard.model';
 
 @Component({
   selector: 'stat-playground-doughnut-chart',
-  template: `<div><canvas #chart></canvas></div>`
+  template: `
+      <div>
+          <canvas #chart></canvas>
+      </div>`
 })
-export class DoughnutChartComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class DoughnutChartComponent implements AfterViewInit, OnDestroy {
   @ViewChild('chart') canvas: ElementRef;
 
-  @Input() latestForCountry: CountryNumbers;
+  @Input() latestForCountry: CNumbs;
 
   chart: Chart;
-  context: CanvasRenderingContext2D;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const latestForCountry: SimpleChange = changes['latestForCountry'];
-
-    if (!latestForCountry.firstChange && latestForCountry.previousValue !== latestForCountry.currentValue) {
-      this.generateChart(latestForCountry.currentValue);
-    }
-  }
 
   ngAfterViewInit(): void {
-    this.context = this.canvas.nativeElement.getContext('2d');
+    this.generateChart(this.latestForCountry);
   }
 
   generateChart({ confirmed, deaths, recovered }) {
@@ -40,7 +26,9 @@ export class DoughnutChartComponent implements AfterViewInit, OnChanges, OnDestr
       this.chart.clear();
     }
 
-    this.chart = new Chart(this.context, {
+    const context = this.canvas.nativeElement.getContext('2d');
+
+    this.chart = new Chart(context, {
       type: 'doughnut',
       data: {
         labels: ['Confirmed', 'Deaths', 'Recovered'],

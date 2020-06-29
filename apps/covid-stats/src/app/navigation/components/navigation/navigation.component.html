@@ -6,14 +6,14 @@
     <h6>{{ countriesCount$ | async }} Countries</h6>
     <ul class="nav-list countries-list">
         <ng-container *ngFor="let country of countries$ | async">
-            <li (click)="onSelectCountry(country.countryCode)" class="nav-link"
+            <li class="nav-link"
                 [ngClass]="{'active': (selectedCountry$ | async) === country.countryCode}">
-                <span class="list-item">{{ country.name }} </span>
-                <!--        <span class="list-numbers">-->
-                <!--            <span class="badge badge-info">{{country.numbers.confirmed}}</span>-->
-                <!--            <span class="badge badge-danger">{{country.numbers.deaths}}</span>-->
-                <!--            <span class="badge badge-success">{{country.numbers.recovered}}</span>-->
-                <!--        </span>-->
+                <a [routerLink]="country['alpha-3']" class="list-item">{{ country.name }} </a>
+                <span class="list-numbers" *ngIf="!!country.numbers">
+                    <span class="badge badge-info">{{country.numbers.confirmed}}</span>
+                    <span class="badge badge-danger">{{country.numbers.deaths}}</span>
+                    <span class="badge badge-success">{{country.numbers.recovered}}</span>
+                </span>
             </li>
         </ng-container>
     </ul>

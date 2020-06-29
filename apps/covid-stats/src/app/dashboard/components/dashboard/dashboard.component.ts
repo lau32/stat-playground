@@ -1,11 +1,5 @@
-import {
-  Component
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, mergeMap } from 'rxjs/operators';
-
-import { DashboardService } from '../../providers/dashboard.service';
-import { CountryNumbers } from '../../../core/providers/cases.api';
+import { Component } from '@angular/core';
+import { DashboardFacade } from '../../+state/dashboard.facade';
 
 @Component({
   selector: 'stat-playground-dashboard',
@@ -13,22 +7,11 @@ import { CountryNumbers } from '../../../core/providers/cases.api';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  latestForCountry$ = this.activatedRoute.paramMap
-    .pipe(
-      map((params) => params.get('countryCode')),
-      filter((countryCode) => !!countryCode),
-      mergeMap((countryCode) => this.covidService.getLatestForCountry(countryCode)),
-      map((country) => Object.values<CountryNumbers>(country)[0])
-    );
+  latestForCountry$ = this.dashboardFacade.latestForCountry$;
+  loaded$ = this.dashboardFacade.loaded$;
 
   constructor(
-    private covidService: DashboardService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private dashboardFacade: DashboardFacade
   ) {
-  }
-
-  onSelectCountry(countryCode: string): void {
-    this.router.navigate([countryCode]);
   }
 }

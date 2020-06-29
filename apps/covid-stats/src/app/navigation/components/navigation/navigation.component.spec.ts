@@ -19,7 +19,8 @@ describe('NavigationComponent', () => {
             allCountries$: of([]),
             selectedCountry$: of(''),
             countriesCount$: of(0),
-            setSelectedCountry: jest.fn()
+            setSelectedCountry: jest.fn(),
+            loadCountries: jest.fn()
           },
         },
       ],

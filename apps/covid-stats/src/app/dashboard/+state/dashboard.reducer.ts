@@ -4,6 +4,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import * as DashboardActions from './dashboard.actions';
 import { DashboardEntity } from './dashboard.models';
 import { Country } from '../../shared/models/country.model';
+import { CNumbs } from '../models/dashboard.model';
 
 export const DASHBOARD_FEATURE_KEY = 'dashboard';
 
@@ -12,6 +13,7 @@ export interface State extends EntityState<DashboardEntity> {
   loaded: boolean;
   error?: string | null;
   countries?: Country[]
+  latestForCountry?: CNumbs
 }
 
 export interface DashboardPartialState {
@@ -31,8 +33,8 @@ const dashboardReducer = createReducer(
     loaded: false,
     error: null
   })),
-  on(DashboardActions.loadLatestForCountrySuccess, (state, { dashboard }) =>
-    dashboardAdapter.setAll(dashboard, { ...state, loaded: true })
+  on(DashboardActions.loadLatestForCountrySuccess, (state, { latestForCountry }) =>
+    ({ ...state, loaded: true, latestForCountry })
   ),
   on(DashboardActions.loadLatestForCountryFailure, (state, { error }) => ({
     ...state,

@@ -1,18 +1,8 @@
-<div class="main-container">
-    <header class="header header-6">
-        Covid stats
-    </header>
-    <div class="content-container">
-        <nav class="sidenav" style="width: 25%; padding-right: 10px;">
-            <section class="sidenav-content">
-                <section class="nav-group">
-                    <stat-playground-navigation></stat-playground-navigation>
-                </section>
-            </section>
-        </nav>
-        <div class="content-area">
-            <stat-playground-doughnut-chart
-                    [latestForCountry]="latestForCountry$ | async"></stat-playground-doughnut-chart>
-        </div>
-    </div>
-</div>
+<ng-container *ngIf="loaded$ | async;else loading">
+    <stat-playground-doughnut-chart
+            [latestForCountry]="latestForCountry$ | async"></stat-playground-doughnut-chart>
+</ng-container>
+
+<ng-template #loading>
+    <span>Loading ...</span>
+</ng-template>

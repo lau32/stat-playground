@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import { NavigationEntity } from '../+state/navigation.models';
 import { NavigationApi } from './navigation.api';
 import { CasesApi } from '../../core/providers/cases.api';
@@ -9,12 +9,32 @@ import { CasesApi } from '../../core/providers/cases.api';
 export class NavigationService {
   constructor(
     private navigationApi: NavigationApi,
-    private casesApi: CasesApi,
-    ) {
+    private casesApi: CasesApi
+  ) {
   }
 
   getLatestNumbers() {
-    return this.casesApi.getLatestNumbers()
+    return this.casesApi.getLatestNumbers();
+  }
+
+  loadCountries(): Observable<NavigationEntity[]> {
+    return this.getCamelCaseCountries()
+      .pipe(
+        concatMap(countries => this.getLatestNumbers()
+          .pipe(
+            map(({ result: numbers }) => numbers.reduce((acc, countryNumbers) => {
+              return { ...acc, ...countryNumbers };
+            }, {})),
+            map((numbers) => countries
+              .reduce((acc, country) => {
+                const countryNumbers = numbers[country['alpha-3']];
+
+                return !!countryNumbers ? [...acc, { ...country, numbers: countryNumbers }] : acc;
+              }, []))
+          )
+        )
+      );
+
   }
 
   getCamelCaseCountries(): Observable<NavigationEntity[]> {

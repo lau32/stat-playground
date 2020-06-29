@@ -9,6 +9,7 @@ import { NavigationEffects } from './+state/navigation.effects';
 import { NavigationFacade } from './+state/navigation.facade';
 import { NavigationService } from './providers/navigation.service';
 import { NavigationApi } from './providers/navigation.api';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [NavigationComponent],
@@ -18,7 +19,8 @@ import { NavigationApi } from './providers/navigation.api';
       fromNavigation.NAVIGATION_FEATURE_KEY,
       fromNavigation.reducer
     ),
-    EffectsModule.forFeature([NavigationEffects])
+    EffectsModule.forFeature([NavigationEffects]),
+    RouterModule
   ],
   providers: [NavigationFacade, NavigationService, NavigationApi],
   exports: [NavigationComponent]

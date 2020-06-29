@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { NxModule, DataPersistence } from '@nrwl/angular';
+import { DataPersistence, NxModule } from '@nrwl/angular';
 import { hot } from '@nrwl/angular/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { Observable, of, throwError } from 'rxjs';
 
 import { NavigationEffects } from './navigation.effects';
 import * as NavigationActions from './navigation.actions';
-import { NavigationService } from '../providers/navigation.service';
 import {
   loadCountries,
   loadCountriesFailure,
-  loadCountriesSuccess, loadLatestNumbersFailure,
+  loadCountriesSuccess,
+  loadLatestNumbersFailure,
   loadLatestNumbersSuccess
 } from './navigation.actions';
+import { NavigationService } from '../providers/navigation.service';
 import { NavigationEntity } from './navigation.models';
 
 jest.mock('../providers/navigation.service');
@@ -42,23 +42,13 @@ describe('NavigationEffects', () => {
     effects = TestBed.inject(NavigationEffects);
   });
 
-  describe('navigated$', () => {
-    it('should map ROUTER_NAVIGATED to loadCountries', () => {
-      actions = hot('-a-', { a: { type: ROUTER_NAVIGATED } });
-
-      const expected = hot('-a-', { a: loadCountries() });
-
-      expect(effects.navigated$).toBeObservable(expected);
-    });
-  });
-
   describe('loadCountries$', () => {
     beforeEach(() => {
       actions = hot('-(a|)', { a: NavigationActions.loadCountries() });
     });
 
     it('should map successful load to loadCountriesSuccess', () => {
-      jest.spyOn(navigationService, 'getCamelCaseCountries')
+      jest.spyOn(navigationService, 'loadCountries')
         .mockReturnValue(of(countriesData));
       const expected = hot('-(a|)',
         { a: loadCountriesSuccess({ countries: countriesData }) });
@@ -68,7 +58,7 @@ describe('NavigationEffects', () => {
 
     it('should map failed load to loadCountriesFailure', () => {
       const error = new Error('no data');
-      jest.spyOn(navigationService, 'getCamelCaseCountries')
+      jest.spyOn(navigationService, 'loadCountries')
         .mockImplementation(() => throwError(error));
       const expected = hot('-(a|)',
         { a: loadCountriesFailure({ error }) });

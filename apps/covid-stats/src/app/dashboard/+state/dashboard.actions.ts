@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { DashboardEntity } from './dashboard.models';
+import { CNumbs } from '../models/dashboard.model';
 
 export const loadLatestForCountry = createAction('[Dashboard] Load LatestForCountry',
   props<{ payload: { countryCode: string } }>()
@@ -7,7 +7,7 @@ export const loadLatestForCountry = createAction('[Dashboard] Load LatestForCoun
 
 export const loadLatestForCountrySuccess = createAction(
   '[Dashboard] Load LatestForCountry Success',
-  props<{ dashboard: DashboardEntity[] }>()
+  props<{ latestForCountry: CNumbs }>()
 );
 
 export const loadLatestForCountryFailure = createAction(

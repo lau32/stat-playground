@@ -42,4 +42,12 @@ describe('NavigationFacade', () => {
 
     expect(facade.countriesCount$).toBeObservable(hot('a', { a: 0 }));
   });
+
+  it('should call loadCountries', () => {
+    const spy = jest.spyOn(facade, 'dispatch');
+
+    facade.loadCountries();
+
+    expect(spy).toBeCalled();
+  });
 });

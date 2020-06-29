@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
 
 import * as fromDashboard from './dashboard.reducer';
 import * as DashboardActions from './dashboard.actions';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
-import { filter, map, tap } from 'rxjs/operators';
-import { CasesApi } from '../../core/providers/cases.api';
+import { filter, map } from 'rxjs/operators';
+import { DashboardService } from '../providers/dashboard.service';
+import { CNumbs } from '../models/dashboard.model';
 
 @Injectable()
 export class DashboardEffects {
-  loadCountryCode$ = createEffect(() =>
+  navigated$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),
-      map(({ payload: { routerState: { root: { firstChild: { params } } } } }) => params),
-      tap(console.log),
+      map(({ payload: { routerState: { root: { firstChild: { firstChild: { params } } } } } }) => params),
       filter(({ countryCode }) => !!countryCode),
       map(({ countryCode }) => DashboardActions.loadLatestForCountry({ payload: { countryCode } }))
     )
@@ -23,14 +23,11 @@ export class DashboardEffects {
   loadLatestForCountry$ = createEffect(() =>
     this.dataPersistence.fetch(DashboardActions.loadLatestForCountry, {
       run: (
-        action: ReturnType<typeof DashboardActions.loadLatestForCountry>,
-      ) => this.covidApiService.getLatestForCountry(action.payload.countryCode)
+        { payload: { countryCode } }: ReturnType<typeof DashboardActions.loadLatestForCountry>
+      ) => this.dashboardService.getLatestForCountry(countryCode)
         .pipe(
           map((response) => DashboardActions.loadLatestForCountrySuccess({
-            dashboard: [{
-              id: Object.keys(response.result)[0],
-              ...Object.values(response.result)[0]
-            }]
+            latestForCountry: Object.values<CNumbs>(response)[0]
           }))
         ),
 
@@ -46,7 +43,7 @@ export class DashboardEffects {
   constructor(
     private actions$: Actions,
     private dataPersistence: DataPersistence<fromDashboard.DashboardPartialState>,
-    private covidApiService: CasesApi
+    private dashboardService: DashboardService
   ) {
   }
 }

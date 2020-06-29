@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { select, Store, Action } from '@ngrx/store';
+import { Action, select, Store } from '@ngrx/store';
 
 import * as fromNavigation from './navigation.reducer';
 import * as NavigationSelectors from './navigation.selectors';
-import { setSelectedCountry } from './navigation.actions';
+import { loadCountries } from './navigation.actions';
 
 @Injectable()
 export class NavigationFacade {
@@ -25,7 +25,7 @@ export class NavigationFacade {
     this.store.dispatch(action);
   }
 
-  setSelectedCountry(countryCode: string) {
-    this.dispatch(setSelectedCountry({ countryCode }));
+  loadCountries() {
+    this.dispatch(loadCountries());
   }
 }
