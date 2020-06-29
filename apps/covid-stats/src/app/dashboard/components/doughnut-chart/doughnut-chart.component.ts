@@ -5,6 +5,7 @@ import { CNumbs } from '../../models/dashboard.model';
 
 @Component({
   selector: 'stat-playground-doughnut-chart',
+  styleUrls: ['./doughnut-chart.component.scss'],
   template: `
       <div>
           <canvas #chart></canvas>
@@ -27,6 +28,10 @@ export class DoughnutChartComponent implements AfterViewInit, OnDestroy {
     }
 
     const context = this.canvas.nativeElement.getContext('2d');
+
+    if (!context) {
+      return;
+    }
 
     this.chart = new Chart(context, {
       type: 'doughnut',

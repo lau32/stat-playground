@@ -2,13 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { DataPersistence, NxModule } from '@nrwl/angular';
 import { hot } from '@nrwl/angular/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
+import { Action } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Observable, of, throwError } from 'rxjs';
 
 import { NavigationEffects } from './navigation.effects';
 import * as NavigationActions from './navigation.actions';
 import {
-  loadCountries,
   loadCountriesFailure,
   loadCountriesSuccess,
   loadLatestNumbersFailure,
@@ -22,8 +22,8 @@ jest.mock('../providers/navigation.service');
 const countriesData: NavigationEntity[] = [];
 
 describe('NavigationEffects', () => {
-  let navigationService;
-  let actions: Observable<any>;
+  let navigationService: NavigationService;
+  let actions: Observable<Action>;
   let effects: NavigationEffects;
 
   beforeEach(() => {
@@ -75,8 +75,9 @@ describe('NavigationEffects', () => {
 
     it('should map successful load to loadLatestNumbersSuccess', () => {
       const latestNumbersData = [];
+      const mockResult = { result: latestNumbersData, count: 0, date: new Date() };
       jest.spyOn(navigationService, 'getLatestNumbers')
-        .mockReturnValue(of({ result: latestNumbersData }));
+        .mockReturnValue(of(mockResult));
       const expected = hot('-(a|)',
         { a: loadLatestNumbersSuccess({ latestNumbers: latestNumbersData }) });
 

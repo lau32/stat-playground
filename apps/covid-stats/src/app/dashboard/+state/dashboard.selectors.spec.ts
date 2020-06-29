@@ -1,14 +1,17 @@
 import { DashboardEntity } from './dashboard.models';
 import { dashboardAdapter, initialState } from './dashboard.reducer';
-import * as DashboardSelectors from './dashboard.selectors';
+import { getDashboardError, getDashboardLoaded, getLatestForCountry } from './dashboard.selectors';
+
+const latestForCountryData = {};
 
 describe('Dashboard Selectors', () => {
+  const getDashboardId = (model) => model.countryCode;
   const ERROR_MSG = 'No Error Available';
-  const getDashboardId = (it) => it['id'];
   const createDashboardEntity = (id: string, name = '') =>
     ({
       id,
-      name: name || `name-${id}`
+      name: name || `name-${id}`,
+      countryCode: name || `name-${id}`
     } as DashboardEntity);
 
   let state;
@@ -23,7 +26,8 @@ describe('Dashboard Selectors', () => {
         ],
         {
           ...initialState,
-          selectedId: 'PRODUCT-BBB',
+          selectedId: getDashboardId,
+          latestForCountry: latestForCountryData,
           error: ERROR_MSG,
           loaded: true
         }
@@ -31,32 +35,21 @@ describe('Dashboard Selectors', () => {
     };
   });
 
-  describe('Dashboard Selectors', () => {
-    it('getAllDashboard() should return the list of Dashboard', () => {
-      const results = DashboardSelectors.getAllDashboard(state);
-      const selId = getDashboardId(results[1]);
+  it('getDashboardLoaded() should return loaded', () => {
+    const result: boolean = getDashboardLoaded(state);
 
-      expect(results.length).toBe(3);
-      expect(selId).toBe('PRODUCT-BBB');
-    });
+    expect(result).toBe(true);
+  });
 
-    it('getSelected() should return the selected Entity', () => {
-      const result = DashboardSelectors.getSelected(state);
-      const selId = getDashboardId(result);
+  it('getDashboardError() should return error', () => {
+    const result: string = getDashboardError(state);
 
-      expect(selId).toBe('PRODUCT-BBB');
-    });
+    expect(result).toBe(ERROR_MSG);
+  });
 
-    it('getDashboardLoaded() should return the current \'loaded\' status', () => {
-      const result = DashboardSelectors.getDashboardLoaded(state);
+  it('getLatestForCountry() should return error', () => {
+    const result = getLatestForCountry(state);
 
-      expect(result).toBe(true);
-    });
-
-    it('getDashboardError() should return the current \'error\' state', () => {
-      const result = DashboardSelectors.getDashboardError(state);
-
-      expect(result).toBe(ERROR_MSG);
-    });
+    expect(result).toBe(latestForCountryData);
   });
 });

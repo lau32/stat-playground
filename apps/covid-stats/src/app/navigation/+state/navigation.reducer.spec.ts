@@ -11,7 +11,7 @@ describe('Navigation Reducer', () => {
     expect(result).toBe(initialState);
   });
 
-  it('should return the loadCountriesSuccess', () => {
+  it('should return the loadCountries', () => {
     const action: Action = { type: loadCountries.type };
 
     const result: State = reducer(initialState, action);
@@ -28,10 +28,11 @@ describe('Navigation Reducer', () => {
   });
 
   it('should return the loadCountriesFailure', () => {
-    const action: Action = { type: loadCountriesFailure.type, error: {} } as any;
+    const error = new Error('no data');
+    const action: Action = { type: loadCountriesFailure.type, error } as any;
 
     const result: State = reducer(initialState, action);
 
-    expect(result).toStrictEqual({ ...initialState, error: {} });
+    expect(result).toStrictEqual({ ...initialState, error });
   });
 });

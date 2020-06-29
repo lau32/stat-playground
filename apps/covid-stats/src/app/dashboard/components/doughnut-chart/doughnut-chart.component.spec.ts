@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DoughnutChartComponent } from './doughnut-chart.component';
-import { ElementRef } from '@angular/core';
+
+const latestForCountryData = {
+  confirmed: 1, deaths: 2, recovered: 3
+};
 
 describe('DoughnutChartComponent', () => {
   let canvasElement;
@@ -10,13 +13,13 @@ describe('DoughnutChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DoughnutChartComponent],
+      declarations: [DoughnutChartComponent]
     }).compileComponents();
   }));
 
   beforeAll(() => {
     canvasElement = window.HTMLCanvasElement.prototype.getContext;
-    window.HTMLCanvasElement.prototype.getContext = (...args) => null;
+    window.HTMLCanvasElement.prototype.getContext = () => null;
   });
 
   afterAll(() => {
@@ -26,10 +29,12 @@ describe('DoughnutChartComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DoughnutChartComponent);
     component = fixture.componentInstance;
+    component.latestForCountry = latestForCountryData;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(1).toBeTruthy();
+
+    expect(component).toBeDefined();
   });
 });

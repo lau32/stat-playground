@@ -14,15 +14,3 @@ export const loadLatestForCountryFailure = createAction(
   '[Dashboard] Load LatestForCountry Failure',
   props<{ error: any }>()
 );
-
-export const loadLatestCount = createAction('[Dashboard] Load LatestCount');
-
-export const loadLatestCountSuccess = createAction(
-  '[Dashboard] Load LatestCount Success',
-  props<{ latestCount: any[] }>()
-);
-
-export const loadLatestCountFailure = createAction(
-  '[Dashboard] Load Countries Failure',
-  props<{ error: any }>()
-);

@@ -1,38 +1,41 @@
-import { DashboardEntity } from './dashboard.models';
-import * as DashboardActions from './dashboard.actions';
-import { State, initialState, reducer } from './dashboard.reducer';
+import { Action } from '@ngrx/store';
+
+import { loadLatestForCountry, loadLatestForCountryFailure, loadLatestForCountrySuccess } from './dashboard.actions';
+import { initialState, reducer, State } from './dashboard.reducer';
+
+const latestForCountryData = {};
 
 describe('Dashboard Reducer', () => {
-  const createDashboardEntity = (id: string, name = '') =>
-    ({
-      id,
-      name: name || `name-${id}`,
-    } as DashboardEntity);
+  it('should return the default state', () => {
+    const action: Action = { type: '' };
 
-  beforeEach(() => {});
+    const result: State = reducer(initialState, action);
 
-  describe('valid Dashboard actions', () => {
-    it('loadDashboardSuccess should return set the list of known Dashboard', () => {
-      const dashboard = [
-        createDashboardEntity('PRODUCT-AAA'),
-        createDashboardEntity('PRODUCT-zzz'),
-      ];
-      const action = DashboardActions.loadLatestForCountrySuccess({ latestForCountry: dashboard });
-
-      const result: State = reducer(initialState, action);
-
-      expect(result.loaded).toBe(true);
-      expect(result.ids.length).toBe(2);
-    });
+    expect(result).toBe(initialState);
   });
 
-  describe('unknown action', () => {
-    it('should return the previous state', () => {
-      const action = {} as any;
+  it('should return the loadLatestForCountry', () => {
+    const action: Action = { type: loadLatestForCountry.type };
 
-      const result = reducer(initialState, action);
+    const result: State = reducer(initialState, action);
 
-      expect(result).toBe(initialState);
-    });
+    expect(result).toStrictEqual({ ...initialState, loaded: false, error: null });
+  });
+
+  it('should return the loadLatestForCountrySuccess', () => {
+    const action: Action = { type: loadLatestForCountrySuccess.type, latestForCountry: latestForCountryData } as any;
+
+    const result: State = reducer(initialState, action);
+
+    expect(result).toStrictEqual({ ...initialState, loaded: true, latestForCountry: latestForCountryData });
+  });
+
+  it('should return the loadLatestForCountryFailure', () => {
+    const error = new Error('no data');
+    const action: Action = { type: loadLatestForCountryFailure.type, error } as any;
+
+    const result: State = reducer(initialState, action);
+
+    expect(result).toStrictEqual({ ...initialState, error });
   });
 });
