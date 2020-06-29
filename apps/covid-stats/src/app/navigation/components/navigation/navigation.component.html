@@ -1,0 +1,20 @@
+<ng-container *ngIf="loaded$; else loading">
+    <h6>Available countries {{ countriesCount$ | async }}</h6>
+    <ul class="nav-list countries-list">
+        <ng-container *ngFor="let country of countries$ | async">
+            <li class="nav-link"
+                [ngClass]="{'active': (selectedCountry$ | async) === country.countryCode}">
+                <a [routerLink]="country['alpha-3']" class="list-item">{{ country.name }} </a>
+                <span class="list-numbers" *ngIf="!!country.numbers">
+                    <span class="badge badge-info">{{country.numbers.confirmed}}</span>
+                    <span class="badge badge-danger">{{country.numbers.deaths}}</span>
+                    <span class="badge badge-success">{{country.numbers.recovered}}</span>
+                </span>
+            </li>
+        </ng-container>
+    </ul>
+</ng-container>
+
+<ng-template #loading>
+    <span>Loading...</span>
+</ng-template>

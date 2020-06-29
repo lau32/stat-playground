@@ -1,0 +1,8 @@
+<ng-container *ngIf="loaded$ | async;else loading">
+    <stat-playground-doughnut-chart
+            [latestForCountry]="latestForCountry$ | async"></stat-playground-doughnut-chart>
+</ng-container>
+
+<ng-template #loading>
+    <span>Loading ...</span>
+</ng-template>

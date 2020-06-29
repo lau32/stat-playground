@@ -25,8 +25,16 @@
               "apps/covid-stats/src/favicon.ico",
               "apps/covid-stats/src/assets"
             ],
-            "styles": ["apps/covid-stats/src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "node_modules/@clr/ui/clr-ui.min.css",
+              "apps/covid-stats/src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
+              "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+              "node_modules/@clr/icons/clr-icons.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -84,7 +92,7 @@
               "apps/covid-stats/tsconfig.app.json",
               "apps/covid-stats/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/covid-stats/**"]
+            "exclude": ["**/node_modules/**", "!apps/covid-stats/**/*"]
           }
         },
         "test": {
@@ -120,7 +128,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["apps/covid-stats-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/covid-stats-e2e/**"]
+            "exclude": ["**/node_modules/**", "!apps/covid-stats-e2e/**/*"]
           }
         }
       }
@@ -167,7 +175,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/api/**"]
+            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
           }
         },
         "test": {
@@ -193,7 +201,7 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**/*"]
           }
         },
         "test": {
