@@ -23,7 +23,8 @@
             "aot": true,
             "assets": [
               "apps/covid-stats/src/favicon.ico",
-              "apps/covid-stats/src/assets"
+              "apps/covid-stats/src/assets",
+              "apps/covid-stats/src/_redirects"
             ],
             "styles": [
               "node_modules/@clr/icons/clr-icons.min.css",
