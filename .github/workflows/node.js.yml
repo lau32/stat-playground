@@ -25,5 +25,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run affected:build
+    - run: npm run affected:build --base=master --head=HEAD
     - run: npm run affected:test
