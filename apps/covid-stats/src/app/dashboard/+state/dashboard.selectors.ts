@@ -61,6 +61,6 @@ export const getConfirmed = createSelector(
   getDashboardState,
   (state: State) => state.latestTimeSeries.reduce((acc, data) => ({
     dates: [...acc.dates, data.date],
-    confirmed: [...acc.dates, data.date]
+    confirmed: [...acc.confirmed, data.confirmed]
   }), { dates: [], confirmed: [] })
 );
