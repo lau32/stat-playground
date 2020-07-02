@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { DashboardService } from './dashboard.service';
 import { CasesApi } from '../../core/providers/cases.api';
 import { hot } from '@nrwl/angular/testing';
+import { of } from 'rxjs';
 
 jest.mock('../../core/providers/cases.api');
 
@@ -17,7 +18,7 @@ const latestForCountry = {
 };
 
 
-describe('CovidService', () => {
+describe('DashboardService', () => {
   let service: DashboardService;
 
   beforeEach(() => {
@@ -39,6 +40,20 @@ describe('CovidService', () => {
       .mockReturnValue(mockValue);
 
     const result = service.getLatestForCountry('');
+
+    expect(result).toBeObservable(expected);
+  });
+
+  it('should map to latest country results', () => {
+    const mockValue = hot('-(a|)', { a: [] });
+    const expected = hot('-(a|)', { a: [] });
+    const casesApi = TestBed.inject(CasesApi);
+    jest.spyOn(casesApi, 'getLatestTimeSeries')
+      .mockReturnValue(mockValue);
+    jest.spyOn(casesApi, 'getLatestDate')
+      .mockReturnValue(of(''));
+
+    const result = service.getLatestTimeSeries('');
 
     expect(result).toBeObservable(expected);
   });

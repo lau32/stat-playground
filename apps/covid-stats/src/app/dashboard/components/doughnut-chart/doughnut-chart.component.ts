@@ -1,39 +1,22 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 
 import { CNumbs } from '../../models/dashboard.model';
 
 @Component({
   selector: 'stat-playground-doughnut-chart',
-  styleUrls: ['./doughnut-chart.component.scss'],
   template: `
-      <div>
-          <canvas #chart></canvas>
-      </div>`
+      <stat-playground-chart [chartConfig]="chartConfig"></stat-playground-chart>`
 })
-export class DoughnutChartComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('chart') canvas: ElementRef;
-
+export class DoughnutChartComponent implements OnInit {
   @Input() latestForCountry: CNumbs;
 
-  chart: Chart;
+  chartConfig: Chart.ChartConfiguration = {};
 
-  ngAfterViewInit(): void {
-    this.generateChart(this.latestForCountry);
-  }
+  ngOnInit(): void {
+    const { confirmed, deaths, recovered } = this.latestForCountry;
 
-  generateChart({ confirmed, deaths, recovered }) {
-    if (this.chart) {
-      this.chart.clear();
-    }
-
-    const context = this.canvas.nativeElement.getContext('2d');
-
-    if (!context) {
-      return;
-    }
-
-    this.chart = new Chart(context, {
+    this.chartConfig = {
       type: 'doughnut',
       data: {
         labels: ['Confirmed', 'Deaths', 'Recovered'],
@@ -49,12 +32,6 @@ export class DoughnutChartComponent implements AfterViewInit, OnDestroy {
       options: {
         hover: { intersect: false }
       }
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+    };
   }
 }

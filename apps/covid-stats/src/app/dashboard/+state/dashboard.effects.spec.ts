@@ -7,7 +7,12 @@ import { hot } from '@nrwl/angular/testing';
 import { Observable, of, throwError } from 'rxjs';
 
 import { DashboardService } from '../providers/dashboard.service';
-import { loadLatestForCountry, loadLatestForCountryFailure, loadLatestForCountrySuccess } from './dashboard.actions';
+import {
+  loadLatestForCountry,
+  loadLatestForCountryFailure,
+  loadLatestForCountrySuccess,
+  loadLatestTimeSeries, loadLatestTimeSeriesFailure, loadLatestTimeSeriesSuccess
+} from './dashboard.actions';
 import { DashboardEffects } from './dashboard.effects';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
 
@@ -34,7 +39,11 @@ describe('DashboardEffects', () => {
         DashboardService,
         DataPersistence,
         provideMockActions(() => actions),
-        provideMockStore()
+        provideMockStore({
+          initialState: {
+            dashboard: { countryCode: '' }
+          }
+        })
       ]
     });
 
@@ -79,6 +88,31 @@ describe('DashboardEffects', () => {
         { a: loadLatestForCountryFailure({ error }) });
 
       expect(effects.loadLatestForCountry$).toBeObservable(expected);
+    });
+  });
+
+  describe('latestTimeSeries$', () => {
+    beforeEach(() => {
+      actions = hot('-(a|)', { a: loadLatestTimeSeries() });
+    });
+
+    it('should map successful load to loadLatestTimeSeriesSuccess', () => {
+      jest.spyOn(dashboardService, 'getLatestTimeSeries')
+        .mockReturnValue(of([]));
+      const expected = hot('-(a|)',
+        { a: loadLatestTimeSeriesSuccess({ latestTimeSeries: [] }) });
+
+      expect(effects.latestTimeSeries$).toBeObservable(expected);
+    });
+
+    it('should map failed load to loadLatestTimeSeriesFailure', () => {
+      const error = new Error('no data');
+      jest.spyOn(dashboardService, 'getLatestTimeSeries')
+        .mockImplementation(() => throwError(error));
+      const expected = hot('-(a|)',
+        { a: loadLatestTimeSeriesFailure({ error }) });
+
+      expect(effects.latestTimeSeries$).toBeObservable(expected);
     });
   });
 });

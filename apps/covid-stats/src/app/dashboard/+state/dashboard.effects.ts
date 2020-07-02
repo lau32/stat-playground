@@ -30,13 +30,25 @@ export class DashboardEffects {
             latestForCountry: Object.values<CNumbs>(response)[0]
           }))
         ),
-
       onError: (
         action: ReturnType<typeof DashboardActions.loadLatestForCountry>,
         error
-      ) => {
-        return DashboardActions.loadLatestForCountryFailure({ error });
-      }
+      ) => DashboardActions.loadLatestForCountryFailure({ error })
+    })
+  );
+
+  latestTimeSeries$ = createEffect(() =>
+    this.dataPersistence.fetch(DashboardActions.loadLatestTimeSeries, {
+      run: (
+        action: ReturnType<typeof DashboardActions.loadLatestTimeSeries>,
+        { dashboard: { countryCode } }
+      ) => this.dashboardService.getLatestTimeSeries(countryCode)
+        .pipe(map((latestTimeSeries) =>
+          DashboardActions.loadLatestTimeSeriesSuccess({ latestTimeSeries }))),
+      onError: (
+        action: ReturnType<typeof DashboardActions.loadLatestTimeSeries>,
+        error
+      ) => DashboardActions.loadLatestTimeSeriesFailure({ error })
     })
   );
 
