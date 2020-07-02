@@ -12,18 +12,18 @@ export class BarChartComponent implements OnChanges {
   chartConfig: Chart.ChartConfiguration = {};
 
   ngOnChanges(changes: SimpleChanges): void {
-    const data = changes['data'];
+    const { currentValue, previousValue } = changes['data'];
 
-    if (data.currentValue && data.previousValue !== data.currentValue) {
+    if (currentValue && previousValue !== currentValue) {
       this.chartConfig = {
         type: 'bar',
         data: {
-          labels: data.currentValue.dates,
+          labels: currentValue.dates,
           datasets: [
             {
               label: 'Daily infected',
               backgroundColor: 'hsl(198, 100%, 41%)',
-              data: data.currentValue.infected
+              data: currentValue.infected
             }
           ]
         },

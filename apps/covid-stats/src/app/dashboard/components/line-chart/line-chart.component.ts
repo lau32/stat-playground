@@ -12,19 +12,19 @@ export class LineChartComponent implements OnChanges {
   chartConfig: Chart.ChartConfiguration = {};
 
   ngOnChanges(changes: SimpleChanges): void {
-    const data = changes['data'];
+    const { currentValue, previousValue } = changes['data'];
 
-    if (data.currentValue && data.previousValue !== data.currentValue) {
+    if (currentValue && previousValue !== currentValue) {
       this.chartConfig = {
         type: 'line',
         data: {
-          labels: data.currentValue.dates,
+          labels: currentValue.dates,
           datasets: [
             {
               label: 'Confirmed',
               fill: false,
               borderColor: 'hsl(198, 100%, 41%)',
-              data: data.currentValue.confirmed
+              data: currentValue.confirmed
             }
           ]
         },
