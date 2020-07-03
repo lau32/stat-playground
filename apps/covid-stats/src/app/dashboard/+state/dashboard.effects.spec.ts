@@ -11,7 +11,8 @@ import {
   loadLatestForCountry,
   loadLatestForCountryFailure,
   loadLatestForCountrySuccess,
-  loadLatestTimeSeries, loadLatestTimeSeriesFailure, loadLatestTimeSeriesSuccess
+  loadLatestTimeSeriesFailure,
+  loadLatestTimeSeriesSuccess
 } from './dashboard.actions';
 import { DashboardEffects } from './dashboard.effects';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
@@ -93,7 +94,7 @@ describe('DashboardEffects', () => {
 
   describe('latestTimeSeries$', () => {
     beforeEach(() => {
-      actions = hot('-(a|)', { a: loadLatestTimeSeries() });
+      actions = hot('-(a|)', { a: loadLatestForCountrySuccess({ latestForCountry: latestForCountryData }) });
     });
 
     it('should map successful load to loadLatestTimeSeriesSuccess', () => {

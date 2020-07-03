@@ -38,15 +38,15 @@ export class DashboardEffects {
   );
 
   latestTimeSeries$ = createEffect(() =>
-    this.dataPersistence.fetch(DashboardActions.loadLatestTimeSeries, {
+    this.dataPersistence.fetch(DashboardActions.loadLatestForCountrySuccess, {
       run: (
-        action: ReturnType<typeof DashboardActions.loadLatestTimeSeries>,
+        action: ReturnType<typeof DashboardActions.loadLatestForCountrySuccess>,
         { dashboard: { countryCode } }
       ) => this.dashboardService.getLatestTimeSeries(countryCode)
         .pipe(map((latestTimeSeries) =>
           DashboardActions.loadLatestTimeSeriesSuccess({ latestTimeSeries }))),
       onError: (
-        action: ReturnType<typeof DashboardActions.loadLatestTimeSeries>,
+        action: ReturnType<typeof DashboardActions.loadLatestForCountrySuccess>,
         error
       ) => DashboardActions.loadLatestTimeSeriesFailure({ error })
     })

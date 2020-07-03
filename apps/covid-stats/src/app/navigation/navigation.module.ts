@@ -10,6 +10,7 @@ import { NavigationFacade } from './+state/navigation.facade';
 import { NavigationService } from './providers/navigation.service';
 import { NavigationApi } from './providers/navigation.api';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [NavigationComponent],
@@ -20,7 +21,8 @@ import { RouterModule } from '@angular/router';
       fromNavigation.reducer
     ),
     EffectsModule.forFeature([NavigationEffects]),
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   providers: [NavigationFacade, NavigationService, NavigationApi],
   exports: [NavigationComponent]

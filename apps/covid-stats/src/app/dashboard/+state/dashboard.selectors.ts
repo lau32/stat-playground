@@ -41,7 +41,7 @@ export const getSelected = createSelector(
 
 export const getLatestForCountry = createSelector(
   getDashboardState,
-  (state: State) => state.latestForCountry
+  (state: State) => state.latestForCountry || { confirmed: 0, deaths: 0, recovered: 0 }
 );
 
 export const getLatestTimeSeries = createSelector(

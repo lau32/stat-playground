@@ -7,9 +7,9 @@ import { Chart } from 'chart.js';
       <stat-playground-chart [chartConfig]="chartConfig"></stat-playground-chart>`
 })
 export class LineChartComponent implements OnChanges {
-  @Input() data: { dates: string[], confirmed: number[] };
+  @Input() data;
 
-  chartConfig: Chart.ChartConfiguration = {};
+  chartConfig: Chart.ChartConfiguration;
 
   ngOnChanges(changes: SimpleChanges): void {
     const { currentValue, previousValue } = changes['data'];
@@ -29,8 +29,6 @@ export class LineChartComponent implements OnChanges {
           ]
         },
         options: {
-          responsive: true,
-          showLines: false,
           hover: { intersect: false }
         }
       };

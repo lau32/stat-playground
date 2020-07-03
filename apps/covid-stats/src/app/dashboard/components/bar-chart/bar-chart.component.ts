@@ -7,14 +7,14 @@ import { Chart } from 'chart.js';
       <stat-playground-chart [chartConfig]="chartConfig"></stat-playground-chart>`
 })
 export class BarChartComponent implements OnChanges {
-  @Input() data: { dates: string[], infected: number[] };
+  @Input() data;
 
-  chartConfig: Chart.ChartConfiguration = {};
+  chartConfig: Chart.ChartConfiguration;
 
   ngOnChanges(changes: SimpleChanges): void {
     const { currentValue, previousValue } = changes['data'];
 
-    if (currentValue && previousValue !== currentValue) {
+    if (previousValue !== currentValue) {
       this.chartConfig = {
         type: 'bar',
         data: {
@@ -28,8 +28,6 @@ export class BarChartComponent implements OnChanges {
           ]
         },
         options: {
-          responsive: true,
-          showLines: false,
           hover: { intersect: false }
         }
       };
