@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Result } from '../models/api.model';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 interface GlobalApiResponse<T> {
   count: number
@@ -29,5 +31,18 @@ export class CasesApi {
   getLatestForCountry(countryCode: string) {
     return this.http
       .get<CountryApiResponse<Result>>(LATEST_COUNTRY_NUMBERS_URL(countryCode));
+  }
+
+  getLatestTimeSeries(countryCode: string, latestDate: string) {
+    return this.http
+      .get(`https://covidapi.info/api/v1/country/${countryCode}/timeseries/2020-01-01/${latestDate}`)
+      .pipe(
+        map((response: { count: number, result: [] }) => response.result)
+      );
+  }
+
+  getLatestDate(): Observable<string> {
+    return this.http
+      .get('https://covidapi.info/api/v1/latest-date', { responseType: 'text' });
   }
 }

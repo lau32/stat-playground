@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { DashboardFacade } from '../../+state/dashboard.facade';
 
 @Component({
@@ -6,12 +7,16 @@ import { DashboardFacade } from '../../+state/dashboard.facade';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   latestForCountry$ = this.dashboardFacade.latestForCountry$;
   loaded$ = this.dashboardFacade.loaded$;
+  dailyInfected$ = this.dashboardFacade.dailyInfected$;
+  confirmed$ = this.dashboardFacade.confirmed$;
 
-  constructor(
-    private dashboardFacade: DashboardFacade
-  ) {
+  constructor(private dashboardFacade: DashboardFacade) {
+  }
+
+  ngOnInit(): void {
+    this.dashboardFacade.loadLatestTimeSeries();
   }
 }

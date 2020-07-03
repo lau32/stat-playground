@@ -1,6 +1,17 @@
 <ng-container *ngIf="loaded$ | async;else loading">
-    <stat-playground-doughnut-chart
+    <div class="dashboard__pie-chart">
+        <stat-playground-doughnut-chart
             [latestForCountry]="latestForCountry$ | async"></stat-playground-doughnut-chart>
+    </div>
+
+    <div class="dashboard__detail-charts">
+        <div class="detail-charts__bar-chart">
+            <stat-playground-bar-chart [data]="dailyInfected$ | async" ></stat-playground-bar-chart>
+        </div>
+        <div class="detail-charts__bar-chart">
+            <stat-playground-line-chart [data]="confirmed$ | async"></stat-playground-line-chart>
+        </div>
+    </div>
 </ng-container>
 
 <ng-template #loading>

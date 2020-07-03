@@ -1,23 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DoughnutChartComponent } from './doughnut-chart.component';
+import { LineChartComponent } from './line-chart.component';
 
-const latestForCountryData = {
-  confirmed: 1, deaths: 2, recovered: 3
-};
-
-describe('DoughnutChartComponent', () => {
+describe('LineChartComponent', () => {
   let canvasElement;
-  let component: DoughnutChartComponent;
-  let fixture: ComponentFixture<DoughnutChartComponent>;
+  let component: LineChartComponent;
+  let fixture: ComponentFixture<LineChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DoughnutChartComponent],
+      declarations: [LineChartComponent],
       schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeAll(() => {
@@ -30,9 +25,8 @@ describe('DoughnutChartComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DoughnutChartComponent);
+    fixture = TestBed.createComponent(LineChartComponent);
     component = fixture.componentInstance;
-    component.latestForCountry = latestForCountryData;
     fixture.detectChanges();
   });
 

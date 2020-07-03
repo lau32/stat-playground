@@ -1,8 +1,17 @@
 import { DashboardEntity } from './dashboard.models';
 import { dashboardAdapter, initialState } from './dashboard.reducer';
-import { getDashboardError, getDashboardLoaded, getLatestForCountry } from './dashboard.selectors';
+import {
+  getConfirmed,
+  getDailyInfected,
+  getDashboardError,
+  getDashboardLoaded,
+  getLatestForCountry, getLatestTimeSeries
+} from './dashboard.selectors';
 
 const latestForCountryData = {};
+const latestTimeSeriesData = [];
+const dailyInfectedData = { dates: [], infected: [] };
+const confirmedData = { dates: [], confirmed: [] };
 
 describe('Dashboard Selectors', () => {
   const getDashboardId = (model) => model.countryCode;
@@ -51,5 +60,23 @@ describe('Dashboard Selectors', () => {
     const result = getLatestForCountry(state);
 
     expect(result).toBe(latestForCountryData);
+  });
+
+  it('getLatestTimeSeries() should return error', () => {
+    const result = getLatestTimeSeries(state);
+
+    expect(result).toStrictEqual(latestTimeSeriesData);
+  });
+
+  it('getDailyInfected() should return error', () => {
+    const result = getDailyInfected(state);
+
+    expect(result).toStrictEqual(dailyInfectedData);
+  });
+
+  it('getConfirmed() should return confirmed', () => {
+    const result = getConfirmed(state);
+
+    expect(result).toStrictEqual(confirmedData);
   });
 });

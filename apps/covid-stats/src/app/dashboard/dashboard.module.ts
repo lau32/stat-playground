@@ -11,20 +11,25 @@ import { DashboardEffects } from './+state/dashboard.effects';
 import { DashboardFacade } from './+state/dashboard.facade';
 import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
 import { NavigationModule } from '../navigation/navigation.module';
+import { ChartComponent } from './components/chart/chart.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CountriesComponent,
+    component: CountriesComponent
   },
   {
     path: ':countryCode',
-    component: DashboardComponent,
-  },
+    component: DashboardComponent
+  }
 ];
 
 @NgModule({
-  declarations: [CountriesComponent, DashboardComponent, DoughnutChartComponent],
+  declarations: [
+    ChartComponent, CountriesComponent, DashboardComponent,
+    DoughnutChartComponent, BarChartComponent, LineChartComponent],
   imports: [
     CommonModule,
 
@@ -38,6 +43,7 @@ const routes: Routes = [
     EffectsModule.forFeature([DashboardEffects]),
     NavigationModule
   ],
-  providers: [DashboardFacade],
+  providers: [DashboardFacade]
 })
-export class DashboardModule {}
+export class DashboardModule {
+}

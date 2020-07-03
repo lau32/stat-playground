@@ -5,6 +5,7 @@ import * as DashboardActions from './dashboard.actions';
 import { DashboardEntity } from './dashboard.models';
 import { Country } from '../../shared/models/country.model';
 import { CNumbs } from '../models/dashboard.model';
+import { TimeSeriesData } from '../models/timeseries.model';
 
 export const DASHBOARD_FEATURE_KEY = 'dashboard';
 
@@ -14,6 +15,8 @@ export interface State extends EntityState<DashboardEntity> {
   error?: string | null;
   countries?: Country[]
   latestForCountry?: CNumbs
+  countryCode: string
+  latestTimeSeries: TimeSeriesData[]
 }
 
 export interface DashboardPartialState {
@@ -23,13 +26,18 @@ export interface DashboardPartialState {
 export const dashboardAdapter = createEntityAdapter<DashboardEntity>();
 
 export const initialState: State = dashboardAdapter.getInitialState({
-  loaded: false
+  loaded: false,
+  countries: [],
+  countryCode: '',
+  latestForCountry: null,
+  latestTimeSeries: []
 });
 
 const dashboardReducer = createReducer(
   initialState,
-  on(DashboardActions.loadLatestForCountry, (state) => ({
+  on(DashboardActions.loadLatestForCountry, (state, { payload: { countryCode } }) => ({
     ...state,
+    countryCode,
     loaded: false,
     error: null
   })),
@@ -37,6 +45,14 @@ const dashboardReducer = createReducer(
     ({ ...state, loaded: true, latestForCountry })
   ),
   on(DashboardActions.loadLatestForCountryFailure, (state, { error }) => ({
+    ...state,
+    error
+  })),
+  on(DashboardActions.loadLatestTimeSeriesSuccess, (state, { latestTimeSeries }) => ({
+    ...state,
+    latestTimeSeries
+  })),
+  on(DashboardActions.loadLatestTimeSeriesFailure, (state, { error }) => ({
     ...state,
     error
   }))

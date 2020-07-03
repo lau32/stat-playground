@@ -1,10 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import {
-  DASHBOARD_FEATURE_KEY,
-  State,
-  DashboardPartialState,
-  dashboardAdapter
-} from './dashboard.reducer';
+import { DASHBOARD_FEATURE_KEY, dashboardAdapter, DashboardPartialState, State } from './dashboard.reducer';
 
 export const getDashboardState = createFeatureSelector<DashboardPartialState,
   State>(DASHBOARD_FEATURE_KEY);
@@ -47,4 +42,25 @@ export const getSelected = createSelector(
 export const getLatestForCountry = createSelector(
   getDashboardState,
   (state: State) => state.latestForCountry
+);
+
+export const getLatestTimeSeries = createSelector(
+  getDashboardState,
+  (state: State) => state.latestTimeSeries
+);
+
+export const getDailyInfected = createSelector(
+  getDashboardState,
+  (state: State) => state.latestTimeSeries.reduce((acc, data, index, all) => ({
+    dates: [...acc.dates, data.date],
+    infected: [...acc.infected, Math.max(0, all[index].confirmed - (all[index - 1]?.confirmed || 0))]
+  }), { dates: [], infected: [] })
+);
+
+export const getConfirmed = createSelector(
+  getDashboardState,
+  (state: State) => state.latestTimeSeries.reduce((acc, data) => ({
+    dates: [...acc.dates, data.date],
+    confirmed: [...acc.confirmed, data.confirmed]
+  }), { dates: [], confirmed: [] })
 );
