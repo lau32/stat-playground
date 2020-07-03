@@ -23,7 +23,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('chart') canvas: ElementRef;
 
   @Input() label = 'Stat chart';
-  @Input() chartConfig: Chart.ChartConfiguration = {};
+  @Input() chartConfig: Chart.ChartConfiguration;
 
   chart: Chart;
 
@@ -32,10 +32,10 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const chartConfig = changes['chartConfig'];
+    const { currentValue, previousValue } = changes['chartConfig'];
 
-    if (!chartConfig.firstChange && chartConfig.currentValue !== chartConfig.previousValue) {
-      this.chart.config = chartConfig.currentValue;
+    if (this.chart && currentValue !== previousValue) {
+      this.chart.config = currentValue;
       this.chart.update();
     }
   }

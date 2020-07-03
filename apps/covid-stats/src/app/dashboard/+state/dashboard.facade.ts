@@ -4,7 +4,6 @@ import { Action, select, Store } from '@ngrx/store';
 
 import * as fromDashboard from './dashboard.reducer';
 import * as DashboardSelectors from './dashboard.selectors';
-import { loadLatestTimeSeries } from './dashboard.actions';
 
 @Injectable()
 export class DashboardFacade {
@@ -19,9 +18,5 @@ export class DashboardFacade {
 
   dispatch(action: Action) {
     this.store.dispatch(action);
-  }
-
-  loadLatestTimeSeries(): void {
-    this.dispatch(loadLatestTimeSeries())
   }
 }

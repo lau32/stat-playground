@@ -1,4 +1,4 @@
-<ng-container *ngIf="loaded$; else loading">
+<stat-playground-loader [loaded]="loaded$ | async">
     <h6>Available countries {{ countriesCount$ | async }}</h6>
     <ul class="nav-list countries-list">
         <ng-container *ngFor="let country of countries$ | async">
@@ -13,8 +13,4 @@
             </li>
         </ng-container>
     </ul>
-</ng-container>
-
-<ng-template #loading>
-    <span>Loading...</span>
-</ng-template>
+</stat-playground-loader>

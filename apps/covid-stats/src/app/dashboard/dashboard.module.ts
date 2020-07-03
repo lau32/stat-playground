@@ -14,6 +14,7 @@ import { NavigationModule } from '../navigation/navigation.module';
 import { ChartComponent } from './components/chart/chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -41,7 +42,8 @@ const routes: Routes = [
     ),
 
     EffectsModule.forFeature([DashboardEffects]),
-    NavigationModule
+    NavigationModule,
+    SharedModule
   ],
   providers: [DashboardFacade]
 })
