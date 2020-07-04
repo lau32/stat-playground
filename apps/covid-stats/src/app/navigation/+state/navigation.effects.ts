@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
+import { ROUTER_NAVIGATED } from '@ngrx/router-store';
+import { map } from 'rxjs/operators';
 
 import * as fromNavigation from './navigation.reducer';
 import * as NavigationActions from './navigation.actions';
 import { NavigationService } from '../providers/navigation.service';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class NavigationEffects {
+  navigated$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      map(({ payload: { routerState: { root: { firstChild: { firstChild: { params } } } } } }) =>
+        params['countryCode'] || ''),
+      map((countryCode) => NavigationActions.loadCountries({ countryCode }))
+    )
+  );
+
   loadCountries$ = createEffect(() =>
     this.dataPersistence.fetch(NavigationActions.loadCountries, {
       run: () => {

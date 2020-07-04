@@ -12,7 +12,7 @@ describe('Navigation Reducer', () => {
   });
 
   it('should return the loadCountries', () => {
-    const action: Action = { type: loadCountries.type };
+    const action: Action = { type: loadCountries.type, countryCode: '' } as any;
 
     const result: State = reducer(initialState, action);
 

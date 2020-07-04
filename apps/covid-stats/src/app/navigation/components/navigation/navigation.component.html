@@ -1,15 +1,18 @@
 <stat-playground-loader [loaded]="loaded$ | async">
-    <h6>Available countries {{ countriesCount$ | async }}</h6>
+    <label>Available countries {{ countriesCount$ | async }}</label>
     <ul class="nav-list countries-list">
         <ng-container *ngFor="let country of countries$ | async">
             <li class="nav-link"
-                [ngClass]="{'active': (selectedCountry$ | async) === country.countryCode}">
-                <a [routerLink]="country['alpha-3']" class="list-item">{{ country.name }} </a>
-                <span class="list-numbers" *ngIf="!!country.numbers">
-                    <span class="badge badge-info">{{country.numbers.confirmed}}</span>
-                    <span class="badge badge-danger">{{country.numbers.deaths}}</span>
-                    <span class="badge badge-success">{{country.numbers.recovered}}</span>
-                </span>
+                [ngClass]="{'active': (selectedCountry$ | async) === country['alpha-3']}">
+                <a [routerLink]="country['alpha-3']" role="tooltip" aria-haspopup="true"
+                   class="tooltip tooltip-bottom-right tooltip-sm">
+                    <span>{{ country.name }}</span>
+                    <span class="tooltip-content" *ngIf="!!country.numbers">
+                        <span class="badge badge-info">{{country.numbers.confirmed}}</span>
+                        <span class="badge badge-danger">{{country.numbers.deaths}}</span>
+                        <span class="badge badge-success">{{country.numbers.recovered}}</span>
+                    </span>
+                </a>
             </li>
         </ng-container>
     </ul>

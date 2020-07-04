@@ -4,6 +4,7 @@ import { hot } from '@nrwl/angular/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
+import { ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { Observable, of, throwError } from 'rxjs';
 
 import { NavigationEffects } from './navigation.effects';
@@ -42,9 +43,24 @@ describe('NavigationEffects', () => {
     effects = TestBed.inject(NavigationEffects);
   });
 
+  describe('navigated$', () => {
+    it('should map ROUTER_NAVIGATED to loadCountries', () => {
+      actions = hot('-a-', {
+        a: {
+          type: ROUTER_NAVIGATED,
+          payload: { routerState: { root: { firstChild: { firstChild: { params: { countryCode: 'test' } } } } } }
+        }
+      });
+
+      const expected = hot('-a-', { a: NavigationActions.loadCountries({ countryCode: 'test' }) });
+
+      expect(effects.navigated$).toBeObservable(expected);
+    });
+  });
+
   describe('loadCountries$', () => {
     beforeEach(() => {
-      actions = hot('-(a|)', { a: NavigationActions.loadCountries() });
+      actions = hot('-(a|)', { a: NavigationActions.loadCountries({ countryCode: '' }) });
     });
 
     it('should map successful load to loadCountriesSuccess', () => {

@@ -1,14 +1,12 @@
 <stat-playground-loader [loaded]="loaded$ | async">
     <div class="clr-row">
-        <stat-playground-doughnut-chart class="clr-offset-2 clr-col-8"
+        <stat-playground-doughnut-chart class="clr-col-12 clr-col-md-8 clr-offset-md-2"
             [latestForCountry]="latestForCountry$ | async"></stat-playground-doughnut-chart>
-    </div>
 
-    <div class="clr-row clr-justify-content-between">
-        <div class="detail-charts__bar-chart clr-col-6">
+        <div class="clr-col-12 clr-col-md-6">
             <stat-playground-bar-chart [data]="dailyInfected$ | async" ></stat-playground-bar-chart>
         </div>
-        <div class="detail-charts__bar-chart clr-col-6">
+        <div class="clr-col-12 clr-col-md-6">
             <stat-playground-line-chart [data]="confirmed$ | async"></stat-playground-line-chart>
         </div>
     </div>

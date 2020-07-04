@@ -8,6 +8,7 @@ export const NAVIGATION_FEATURE_KEY = 'navigation';
 
 export interface State extends EntityState<NavigationEntity> {
   selectedId?: string | number;
+  selectedCountryCode: string;
   loaded: boolean;
   error?: string | null;
 }
@@ -22,13 +23,15 @@ export const navigationAdapter: EntityAdapter<NavigationEntity> = createEntityAd
 });
 
 export const initialState: State = navigationAdapter.getInitialState({
-  loaded: false
+  loaded: false,
+  selectedCountryCode: ''
 });
 
 const navigationReducer = createReducer(
   initialState,
-  on(NavigationActions.loadCountries, (state) => ({
+  on(NavigationActions.loadCountries, (state, { countryCode }) => ({
     ...state,
+    selectedCountryCode: countryCode,
     loaded: false,
     error: null
   })),
