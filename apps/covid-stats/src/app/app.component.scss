@@ -3,7 +3,12 @@
   padding-left: 0.5rem;
 }
 
-.sidenav__nav {
-  width: 25%;
-  padding-right: 10px;
+.content-container {
+  .clr-nav-level-1 {
+    padding-top: 0;
+  }
+}
+
+.sidenav {
+  padding: 0 10px;
 }

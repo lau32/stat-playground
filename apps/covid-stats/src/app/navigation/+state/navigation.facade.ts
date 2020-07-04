@@ -3,7 +3,6 @@ import { Action, select, Store } from '@ngrx/store';
 
 import * as fromNavigation from './navigation.reducer';
 import * as NavigationSelectors from './navigation.selectors';
-import { loadCountries } from './navigation.actions';
 
 @Injectable()
 export class NavigationFacade {
@@ -23,9 +22,5 @@ export class NavigationFacade {
 
   dispatch(action: Action) {
     this.store.dispatch(action);
-  }
-
-  loadCountries() {
-    this.dispatch(loadCountries());
   }
 }

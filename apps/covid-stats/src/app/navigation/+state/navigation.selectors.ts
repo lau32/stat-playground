@@ -3,13 +3,11 @@ import {
   NAVIGATION_FEATURE_KEY,
   State,
   NavigationPartialState,
-  navigationAdapter,
+  navigationAdapter
 } from './navigation.reducer';
 
-export const getNavigationState = createFeatureSelector<
-  NavigationPartialState,
-  State
->(NAVIGATION_FEATURE_KEY);
+export const getNavigationState = createFeatureSelector<NavigationPartialState,
+  State>(NAVIGATION_FEATURE_KEY);
 
 const { selectAll, selectEntities } = navigationAdapter.getSelectors();
 
@@ -39,10 +37,8 @@ export const getSelectedId = createSelector(
 );
 
 export const getSelected = createSelector(
-  getNavigationEntities,
-  getSelectedId,
-  (entities, selectedId) =>
-    selectedId && entities[selectedId].countryCode
+  getNavigationState,
+  (state) => state.selectedCountryCode
 );
 
 export const getCount = createSelector(

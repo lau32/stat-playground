@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { NavigationFacade } from '../../+state/navigation.facade';
@@ -10,16 +10,12 @@ import { NavigationEntity } from '../../+state/navigation.models';
   styleUrls: ['./navigation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
   loaded$: Observable<boolean> = this.navigationFacade.loaded$;
   countriesCount$: Observable<number> = this.navigationFacade.countriesCount$;
   countries$: Observable<NavigationEntity[]> = this.navigationFacade.allCountries$;
   selectedCountry$: Observable<string> = this.navigationFacade.selectedCountry$;
 
   constructor(private navigationFacade: NavigationFacade) {
-  }
-
-  ngOnInit(): void {
-    this.navigationFacade.loadCountries();
   }
 }

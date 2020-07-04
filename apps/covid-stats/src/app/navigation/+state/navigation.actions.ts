@@ -2,19 +2,10 @@ import { createAction, props } from '@ngrx/store';
 import { NavigationEntity } from './navigation.models';
 import { Result } from '../../core/models/api.model';
 
-export const loadNavigation = createAction('[Navigation] Load Navigation');
-
-export const loadNavigationSuccess = createAction(
-  '[Navigation] Load Navigation Success',
-  props<{ navigation: NavigationEntity[] }>()
+export const loadCountries = createAction(
+  '[Navigation] Load Countries',
+  props<{ countryCode: string }>()
 );
-
-export const loadNavigationFailure = createAction(
-  '[Navigation] Load Navigation Failure',
-  props<{ error: any }>()
-);
-
-export const loadCountries = createAction('[Navigation] Load Countries');
 
 export const loadCountriesSuccess = createAction(
   '[Navigation] Load Countries Success',
