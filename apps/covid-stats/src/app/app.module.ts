@@ -9,16 +9,22 @@ import { EffectsModule } from '@ngrx/effects';
 import { NxModule } from '@nrwl/angular';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { environment } from '../environments/environment';
+import { CountriesComponent } from './shared/components/countries/countries.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: CountriesComponent
+  },
+  {
+    path: ':countryCode',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
@@ -29,7 +35,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
@@ -45,9 +51,11 @@ const routes: Routes = [
 
     CoreModule,
     NavigationModule,
-    SharedModule
+    SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    RouterModule
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, CountriesComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

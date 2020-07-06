@@ -15,7 +15,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/covid-stats",
+            "outputPath": "dist/apps/covid-stats/browser",
             "index": "apps/covid-stats/src/index.html",
             "main": "apps/covid-stats/src/main.ts",
             "polyfills": "apps/covid-stats/src/polyfills.ts",
@@ -24,7 +24,8 @@
             "assets": [
               "apps/covid-stats/src/favicon.ico",
               "apps/covid-stats/src/assets",
-              "apps/covid-stats/src/_redirects"
+              "apps/covid-stats/src/_redirects",
+              "apps/covid-stats/src/manifest.webmanifest"
             ],
             "styles": [
               "node_modules/@clr/icons/clr-icons.min.css",
@@ -64,7 +65,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/covid-stats/ngsw-config.json"
             }
           }
         },
@@ -103,6 +106,41 @@
             "tsConfig": "apps/covid-stats/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "apps/covid-stats/src/test-setup.ts"
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/apps/covid-stats/server",
+            "main": "apps/covid-stats/src/main.server.ts",
+            "tsConfig": "apps/covid-stats/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "apps/covid-stats/src/environments/environment.ts",
+                  "with": "apps/covid-stats/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "browserTarget": "covid-stats:build",
+            "serverTarget": "covid-stats:server",
+            "route": "shell"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "covid-stats:build:production",
+              "serverTarget": "covid-stats:server:production"
+            }
           }
         }
       }

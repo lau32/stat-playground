@@ -48,7 +48,7 @@ describe('NavigationEffects', () => {
       actions = hot('-a-', {
         a: {
           type: ROUTER_NAVIGATED,
-          payload: { routerState: { root: { firstChild: { firstChild: { params: { countryCode: 'test' } } } } } }
+          payload: { routerState: { root: { firstChild: { params: { countryCode: 'test' } } } } }
         }
       });
 
