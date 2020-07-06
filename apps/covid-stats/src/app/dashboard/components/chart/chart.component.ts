@@ -1,19 +1,20 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
+  ElementRef, Inject,
   Input,
   OnChanges,
-  OnDestroy,
+  OnDestroy, PLATFORM_ID,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { Chart } from 'chart.js';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'stat-playground-chart',
   template: `
-      <div>
+      <div  *ngIf="isBrowser">
           <canvas [attr.aria-label]="label" role="img" #chart>
               <p>Data could not be loaded.</p>
           </canvas>
@@ -26,9 +27,14 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() chartConfig: Chart.ChartConfiguration;
 
   chart: Chart;
+  isBrowser: boolean = isPlatformBrowser(this.platformId);
+
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   ngAfterViewInit(): void {
-    this.generateChart();
+    if (this.isBrowser) {
+      this.generateChart();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

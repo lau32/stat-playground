@@ -13,7 +13,7 @@ export class NavigationEffects {
   navigated$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),
-      map(({ payload: { routerState: { root: { firstChild: { firstChild: { params } } } } } }) =>
+      map(({ payload: { routerState: { root: { firstChild: { params, firstChild } } } } }) =>
         params['countryCode'] || ''),
       map((countryCode) => NavigationActions.loadCountries({ countryCode }))
     )

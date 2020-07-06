@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CountriesComponent } from './components/countries/countries.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -19,17 +18,13 @@ import { SharedModule } from '../shared/shared.module';
 const routes: Routes = [
   {
     path: '',
-    component: CountriesComponent
-  },
-  {
-    path: ':countryCode',
     component: DashboardComponent
   }
 ];
 
 @NgModule({
   declarations: [
-    ChartComponent, CountriesComponent, DashboardComponent,
+    ChartComponent, DashboardComponent,
     DoughnutChartComponent, BarChartComponent, LineChartComponent],
   imports: [
     CommonModule,
