@@ -6,7 +6,10 @@ import { CNumbs } from '../../models/dashboard.model';
 @Component({
   selector: 'stat-playground-doughnut-chart',
   template: `
-      <stat-playground-chart [chartConfig]="chartConfig"></stat-playground-chart>`
+      <stat-playground-loader [loaded]="!!latestForCountry">
+          <stat-playground-chart [chartConfig]="chartConfig"></stat-playground-chart>
+      </stat-playground-loader>
+  `
 })
 export class DoughnutChartComponent implements OnChanges {
   @Input() latestForCountry: CNumbs;
