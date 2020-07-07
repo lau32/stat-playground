@@ -39,6 +39,8 @@ const dashboardReducer = createReducer(
     ...state,
     countryCode,
     loaded: false,
+    latestTimeSeries: [],
+    latestForCountry: null,
     error: null
   })),
   on(DashboardActions.loadLatestForCountrySuccess, (state, { latestForCountry }) =>

@@ -4,17 +4,23 @@ import { Chart } from 'chart.js';
 @Component({
   selector: 'stat-playground-bar-chart',
   template: `
-      <stat-playground-chart [chartConfig]="chartConfig"></stat-playground-chart>`
+      <stat-playground-loader [loaded]="loaded">
+          <stat-playground-chart [chartConfig]="chartConfig"></stat-playground-chart>
+      </stat-playground-loader>
+  `
 })
 export class BarChartComponent implements OnChanges {
-  @Input() data;
+  @Input() data: { dates: string[], infected: number[] };
 
   chartConfig: Chart.ChartConfiguration;
+  loaded = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     const { currentValue, previousValue } = changes['data'];
 
     if (previousValue !== currentValue) {
+      this.loaded = !!this.data.infected.length;
+
       this.chartConfig = {
         type: 'bar',
         data: {
