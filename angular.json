@@ -49,7 +49,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -103,9 +102,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/covid-stats/jest.config.js",
-            "tsConfig": "apps/covid-stats/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/covid-stats/src/test-setup.ts"
+            "passWithNoTests": true
           }
         },
         "server": {
@@ -221,7 +218,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/api/jest.config.js",
-            "tsConfig": "apps/api/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
@@ -247,7 +243,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/api-interfaces/jest.config.js",
-            "tsConfig": "libs/api-interfaces/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }

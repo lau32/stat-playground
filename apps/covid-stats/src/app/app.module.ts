@@ -38,7 +38,7 @@ const routes: Routes = [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
 
     ClarityModule,
     StoreModule.forRoot({
