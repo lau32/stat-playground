@@ -9,14 +9,16 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
-    "module": "esnext",
+    "module": "es2020",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@stat-playground/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@stat-playground/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "rxjs": ["node_modules/rxjs"],
+      "rxjs/*": ["node_modules/rxjs/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
