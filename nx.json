@@ -12,9 +12,17 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "accessToken": "ZmNmN2YzMWYtYjg0Yi00ZDZmLWJjYjAtODY4ZmFjYjFjMWRkfHJlYWQtd3JpdGU=",
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "e2e"
+        ],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
       }
     }
   },
@@ -24,7 +32,9 @@
     },
     "covid-stats-e2e": {
       "tags": [],
-      "implicitDependencies": ["covid-stats"]
+      "implicitDependencies": [
+        "covid-stats"
+      ]
     },
     "api": {
       "tags": []
@@ -32,5 +42,8 @@
     "api-interfaces": {
       "tags": []
     }
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }
